@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 10
+
+Resources:
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/index.handle
+      Runtime: nodejs10.x
+      Events:
+        get0:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+        get:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: GET
+        post0:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+        post:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: POST
+        delete0:
+          Type: Api
+          Properties:
+            Path: /
+            Method: DELETE
+        delete:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: DELETE
+        update0:
+          Type: Api
+          Properties:
+            Path: /
+            Method: PUT
+        update:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: PUT
+      Environment:
+        Variables:
+          TELEGRAM_TOKEN:
+          MEETUP_TOKEN:

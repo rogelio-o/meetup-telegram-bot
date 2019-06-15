@@ -1,0 +1,49 @@
+{
+  "name": "meetup-telegram-bot",
+  "version": "1.0.0",
+  "description": "Meetup Telegram Bot",
+  "main": "./dist/index.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "keywords": [
+    "telegram",
+    "telegram bot",
+    "telegram bot api",
+    "bot",
+    "meetup",
+    "events",
+    "events bot"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist coverage",
+    "precompile": "npm run clean",
+    "compile": "tsc",
+    "lint": "tslint --config tslint.json --project tsconfig.json",
+    "start": "node dist/index.js"
+  },
+  "author": "Rogelio Orts <yo@rogelioorts.com>",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.476.0",
+    "lambda-framework": "^1.2.2",
+    "lambda-framework-aws": "^1.2.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.8",
+    "@types/request": "^2.48.1",
+    "@types/request-promise": "^4.1.44",
+    "typescript": "^3.5.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rogelio-o/meetup-telegram-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rogelio-o/meetup-telegram-bot/issues"
+  },
+  "homepage": "https://github.com/rogelio-o/meetup-telegram-bot"
+}
