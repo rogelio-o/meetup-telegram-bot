@@ -17,21 +17,26 @@ export class GroupsInChatService {
     chatId: string,
     groupUrlName: string
   ): Promise<boolean> {
+    const parsedGroupUrlName = this.formatGroupUrlName(groupUrlName);
     const existGroup = await this.meetupService.existGroupByUrlName(
-      groupUrlName
+      parsedGroupUrlName
     );
     if (!existGroup) {
       return Promise.resolve(false);
     }
 
-    return this.chatRepository.addGroup(chatId, groupUrlName).then(() => true);
+    return this.chatRepository
+      .addGroup(chatId, parsedGroupUrlName)
+      .then(() => true);
   }
 
   public removeGroupFromChat(
     chatId: string,
     groupUrlName: string
   ): Promise<void> {
-    return this.chatRepository.removeGroup(chatId, groupUrlName);
+    const parsedGroupUrlName = this.formatGroupUrlName(groupUrlName);
+
+    return this.chatRepository.removeGroup(chatId, parsedGroupUrlName);
   }
 
   public async findGroupsOfChat(chatId: string): Promise<MeetupGroup[]> {
@@ -62,5 +67,21 @@ export class GroupsInChatService {
         return dateB.getTime() - dateA.getTime();
       })
       .slice(0, 10);
+  }
+
+  private formatGroupUrlName(groupUrlName: string): string {
+    if (
+      groupUrlName.startsWith("http://") ||
+      groupUrlName.startsWith("https://")
+    ) {
+      const endsIndex = groupUrlName.endsWith("/")
+        ? groupUrlName.length - 2
+        : groupUrlName.length - 1;
+      const startsIndex = groupUrlName.lastIndexOf("/", endsIndex);
+
+      return groupUrlName.substr(startsIndex, endsIndex);
+    } else {
+      return groupUrlName;
+    }
   }
 }
