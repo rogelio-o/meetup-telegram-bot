@@ -1,5 +1,6 @@
 import * as request from "request-promise";
 import { Options } from "request";
+import { TelegramOutputMessage } from "../models/TelegramOutputMessage";
 
 export class TelegramService {
   private token: string;
@@ -8,7 +9,16 @@ export class TelegramService {
     this.token = token;
   }
 
-  public async sendMessage(chatId: string, message: string): Promise<void> {
+  public async sendTextMessage(chatId: string, text: string): Promise<void> {
+    const message: TelegramOutputMessage = {
+      chat_id: chatId,
+      text
+    };
+
+    return this.sendMessage(message);
+  }
+
+  public async sendMessage(message: TelegramOutputMessage): Promise<void> {
     if (!this.token) {
       return Promise.reject(new Error("Token not provided!"));
     }
@@ -18,10 +28,7 @@ export class TelegramService {
       method: "POST",
       forever: true,
       json: true,
-      form: {
-        chat_id: chatId,
-        text: message
-      }
+      form: message
     };
     const data: any = await request(options);
 
