@@ -2,10 +2,7 @@ import { GroupsInChatService } from "../services/GroupsInChatService";
 import { TelegramInputMessage } from "../models/TelegramInputMessage";
 import { MeetupEvent } from "../models/MeetupEvent";
 import { TelegramService } from "../services/telegramService";
-import {
-  TelegramOutputMessage,
-  TelegramOutputMessageParseMode
-} from "../models/TelegramOutputMessage";
+import { TelegramOutputMessage } from "../models/TelegramOutputMessage";
 
 export class TelegramInputController {
   private groupsInChatService: GroupsInChatService;
@@ -31,6 +28,8 @@ export class TelegramInputController {
       await this.removeGroup(chatId, message.text.substr(21));
     } else if (message.text === "/meetup_groups") {
       await this.groups(chatId);
+    } else if (message.text === "/meetup_help") {
+      await this.help(chatId);
     }
   }
 
@@ -106,6 +105,22 @@ _${address}_`;
       .join("\n");
     const text = `Meetup groups:
 ${groupsList}`;
+    const message: TelegramOutputMessage = {
+      chat_id: chatId,
+      text,
+      parse_mode: "markdown",
+      disable_web_page_preview: true
+    };
+
+    await this.telegramService.sendMessage(message);
+  }
+
+  private async help(chatId: string): Promise<void> {
+    const text = `How to use Meetup Telegram Bot?:
+- */meetup_groups:* it retrieves all the meetup groups added to the chat.
+- */meetup_add_group [group URL]:* it adds a meetup group to the chat.
+- */meetup_remove_group [group URL]:* it removes a meetup group from the chat.
+- */meetup_events:* it retrieves 10 upcoming events from the meetup groups in the chat.`;
     const message: TelegramOutputMessage = {
       chat_id: chatId,
       text,
