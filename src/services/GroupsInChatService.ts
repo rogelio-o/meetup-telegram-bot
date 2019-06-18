@@ -74,12 +74,13 @@ export class GroupsInChatService {
       groupUrlName.startsWith("http://") ||
       groupUrlName.startsWith("https://")
     ) {
-      const endsIndex = groupUrlName.endsWith("/")
-        ? groupUrlName.length - 2
-        : groupUrlName.length - 1;
-      const startsIndex = groupUrlName.lastIndexOf("/", endsIndex);
+      const urlWithoutQuery = groupUrlName.split("?")[0];
+      const endsIndex = urlWithoutQuery.endsWith("/")
+        ? urlWithoutQuery.length - 1
+        : urlWithoutQuery.length;
+      const startsIndex = urlWithoutQuery.lastIndexOf("/", endsIndex - 1) + 1;
 
-      return groupUrlName.substr(startsIndex, endsIndex);
+      return urlWithoutQuery.substring(startsIndex, endsIndex);
     } else {
       return groupUrlName;
     }
