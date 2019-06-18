@@ -15,7 +15,8 @@ import { GroupsInChatService } from "./services/GroupsInChatService";
 import { TelegramInputController } from "./controllers/TelegramInputController";
 
 const telegramService: TelegramService = new TelegramService(
-  process.env.TELEGRAM_TOKEN
+  process.env.TELEGRAM_TOKEN,
+  process.env.ENVIRONMENT === "prod"
 );
 const meetupService: MeetupService = new MeetupService();
 const chatRepository: IChatRepository = new DynamoDBChatRepository(
