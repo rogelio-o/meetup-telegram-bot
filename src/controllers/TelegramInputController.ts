@@ -20,15 +20,30 @@ export class TelegramInputController {
   public async process(message: TelegramInputMessage): Promise<void> {
     const chatId = message.chat.id.toString();
 
-    if (message.text === "/meetup_events") {
+    if (
+      message.text === "/meetup_events" ||
+      message.text === "/meetup_events@meetup_telegram_bot"
+    ) {
       await this.events(chatId);
-    } else if (message.text.startsWith("/meetup_add_group ")) {
+    } else if (
+      message.text.startsWith("/meetup_add_group ") ||
+      message.text.startsWith("/meetup_add_group@meetup_telegram_bot ")
+    ) {
       await this.addGroup(chatId, message.text.substr(18));
-    } else if (message.text.startsWith("/meetup_remove_group ")) {
+    } else if (
+      message.text.startsWith("/meetup_remove_group ") ||
+      message.text.startsWith("/meetup_remove_group@meetup_telegram_bot ")
+    ) {
       await this.removeGroup(chatId, message.text.substr(21));
-    } else if (message.text === "/meetup_groups") {
+    } else if (
+      message.text === "/meetup_groups" ||
+      message.text === "/meetup_groups@meetup_telegram_bot"
+    ) {
       await this.groups(chatId);
-    } else if (message.text === "/meetup_help") {
+    } else if (
+      message.text === "/meetup_help" ||
+      message.text === "/meetup_help@meetup_telegram_bot"
+    ) {
       await this.help(chatId);
     }
   }
