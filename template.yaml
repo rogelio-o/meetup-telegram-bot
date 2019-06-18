@@ -54,5 +54,10 @@ Resources:
             Method: PUT
       Environment:
         Variables:
-          TELEGRAM_TOKEN:
-          MEETUP_TOKEN:
+          TELEGRAM_TOKEN: !Ref telegramToken
+
+Parameters:
+  telegramToken:
+    Type: String
+    Default: ""
+    Description: Telegram Token
