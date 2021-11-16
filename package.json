@@ -26,7 +26,7 @@
   "author": "Rogelio Orts <yo@rogelioorts.com>",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.476.0",
+    "aws-sdk": "^2.814.0",
     "lambda-framework": "^1.2.2",
     "lambda-framework-aws": "^1.2.2",
     "request": "^2.88.0",
